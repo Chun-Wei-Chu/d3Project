@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Page 12</title>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  
+  <script src="page12.js"></script>
+  
+  	<style>
+		.page12_chartLeft
+		{
+		  font: 12px sans-serif;
+		  background-color: steelblue;
+		  text-align: right;
+		  padding: 3px;
+		  margin: 1px;
+		  color: white;
+		}
+	</style>
+	
+	
+	<style>
+		.page12_bar--positive 
+		{
+		  fill: steelblue;
+		}
+
+		.page12_bar--negative 
+		{
+		  fill: darkorange;
+		}
+
+		.axis text 
+		{
+		  font: 10px sans-serif;
+		}
+
+		.axis path,	.axis line 
+		{
+		  fill: none;
+		  stroke: #000;
+		  shape-rendering: crispEdges;
+		}
+		
+	</style>
+	
+</head>
+
+<body style="width:100%">
+	<table>
+		<tr>
+			<td id="data_old">
+			</td>
+		</tr>
+		<tr>
+			<td id="data_new">
+			</td>
+		</tr>
+	</table>
+
+	<script>
+		var data_old=[
+			{name:"A", value:10, times:2},
+			{name:"B", value:5, times:15},
+			{name:"C", value:12, times:1},
+			{name:"D", value:-8, times:8},
+			{name:"E", value:36, times:6},
+			{name:"F", value:-22, times:12},
+			{name:"G", value:-14, times:7},
+			{name:"H", value:16, times:3},
+			{name:"I", value:11, times:6},
+			{name:"J", value:-2, times:10}
+		];
+		
+		var data_new=[
+			{name:"A", value:12, times:2},
+			{name:"B", value:15, times:15},
+			{name:"C", value:12, times:1},
+			{name:"D", value:-8, times:8},
+			{name:"E", value:40, times:6},
+			{name:"F", value:-20, times:12},
+			{name:"G", value:-12, times:7},
+			{name:"H", value:18, times:3},
+			{name:"I", value:12, times:6},
+			{name:"J", value:-2, times:10}
+		];
+		
+		//target Element(like jquery filiter), data, width, height
+		createPage12("#data_old",data_old, $("body").width()/3*2, 300);
+		createPage12("#data_new",data_new, $("body").width()/3*2, 300);
+
+		
+	</script>
+ 
+</body>
+
+</html>

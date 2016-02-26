@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Page 11</title>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  
+  <script src="page11.js"></script>
+  
+</head>
+
+<style>
+
+	body 
+	{
+	  font: 10px sans-serif;
+	}
+	
+	.axis path,
+	.axis line 
+	{
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	
+	.page11_bar1 
+	{
+	  fill: #F93;
+	}
+	
+	.page11_bar2 
+	{
+	  fill: #3C3;
+	}
+	
+	.page11_bar3 
+	{
+	  fill: #099;
+	}
+	
+
+	.page11_line1 
+	{
+	  fill: none;
+	  stroke: #F93;
+	  stroke-width: 3px;
+	}
+	
+	.page11_line2
+	{
+	  fill: none;
+	  stroke: #3C3;
+	  stroke-width: 3px;
+	}
+	
+	.page11_line3 
+	{
+	  fill: none;
+	  stroke: #099;
+	  stroke-width: 3px;
+	}
+
+
+</style>
+<body>
+<table>
+	<tr><td rowspan="2" id="lineChart"></td><td id="BarUp"></td></tr>
+	<tr><td id="BarDown"></td></tr>
+</table>
+
+<script>
+	var LineData=[
+		{x:0, y:[1, 1, 10]},
+		{x:1, y:[2, 10, 60]},
+		{x:2, y:[4, 40, 100]},
+		{x:3, y:[8, 80, 140]},
+		{x:4, y:[16, 120, 200]},
+		{x:5, y:[32, 160, 280]},
+		{x:6, y:[64, 200, 330]},
+		{x:7, y:[128, 240, 370]},
+		{x:8, y:[256, 400, 450]},
+		{x:9, y:[512, 450, 520]},
+		{x:10, y:[1024, 800, 600]},
+		{x:11, y:[2048, 1200, 710]},
+		{x:12, y:[4096, 2200, 840]}
+	];
+	
+	var BarUpData={
+		text:"績效比較",
+		data:[
+			{text:"新組合", value:10},
+			{text:"原組合", value:9},
+			{text:"指數", value:6}
+		]
+	};
+
+	var BarDownData={
+		text:"波動比較",
+		data:[
+			{text:"新組合", value:10},
+			{text:"原組合", value:9},
+			{text:"指數", value:6}
+		]
+	};
+</script>
+
+<script>
+	//createPage11(target, data, width, height)
+	var tmp = new createPage11();
+	tmp.drawLine("#lineChart", LineData, 700, 500);
+	tmp.drawBar("#BarUp", BarUpData, 300, 250);
+	tmp.drawBar("#BarDown", BarDownData, 300, 250);
+
+
+</script>
+</body>
+</html>

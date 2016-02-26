@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Page 10</title>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  
+  <script src="page10.js"></script>
+  
+</head>
+
+<style>
+
+	.axis path,
+	.axis line 
+	{
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	
+	.page10_bar1 
+	{
+	  fill: #39f;
+	}
+	
+	.page10_bar2 
+	{
+	  fill: #3b3;
+	}
+</style>
+
+<body>
+
+<script>
+	var data=
+	{
+		chartText:"投資組合優化後的淨值成長預測",
+		tableText:"預期報酬",
+		data:[
+			{
+				text:"Today",
+				chart:{now:19700, optimization:19650},
+				table:
+				{
+					now:{percent:0.8, value:158},
+					optimization:{percent:1.41, value:278}
+				}
+			},
+			{
+				text:"1 Month", 
+				chart:{now:19800, optimization:20100},
+				table:
+				{
+					now:{percent:0.8, value:158},
+					optimization:{percent:1.41, value:278}
+				}
+			},
+			{
+				text:"6 Months",
+				chart:{now:20250, optimization:20450},
+				table:
+				{
+					now:{percent:1.95, value:385},
+					optimization:{percent:3.45, value:681}
+				}
+			},
+			{
+				text:"1 Year",
+				chart:{now:20350, optimization:20770},
+				table:
+				{
+					now:{percent:2.76, value:545},
+					optimization:{percent:4.87, value:961}
+				}
+			},
+			{
+				text:"2 Years", 
+				chart:{now:20550, optimization:21220},
+				table:
+				{
+					now:{percent:3.91, value:772},
+					optimization:{percent:6.89, value:1360}
+				}
+			},
+			{
+				text:"3 Years", 
+				chart:{now:20680, optimization:21460},
+				table:
+				{
+					now:{percent:4.78, value:944},
+					optimization:{percent:8.44, value:1666}
+				}
+			}
+		]
+	};
+</script>
+
+<script>
+//Main
+var tmp = new createPage10();//初始化時試看不到prototype的(非同步問題)
+tmp.draw("body", data, 1200, 300, "#fee", 20);
+
+</script>
+</body>
+</html>
