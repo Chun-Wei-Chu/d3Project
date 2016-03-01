@@ -8,21 +8,231 @@
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="page08.js" charset="utf-8"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	
+  
+  <style>
+	body {
+	  font: 10px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  shape-rendering: crispEdges;
+	}
+
+	/* 圓形的外框顏色 */
+	/*.dot {
+	  stroke: #000;
+	}*/
+  </style>
 	
 </head>
 
 <body>
-	
+<!--button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+</button-->
+
 	<script>
 	
 	</script>
  
 	<script>
-		var main = d3.select("body").append("svg");
+	
+		var width = 1000;
+		var height = 700;
 		
+		/**************版面配置**************/
+		var margin = {top: 20, right: width/15, bottom: height/10, left: width/15};
+		width = width - margin.left - margin.right;
+		height = height - margin.top - margin.bottom;
 		
+		var svg = d3.select("body").append("svg")
+		    .attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.attr("fill", "#0cb877")
+		  .append("g")
+			.attr("transform", "translate(" + margin.right + "," + margin.top + ")");
+			
+		//svg.append("rect").attr("style","width:500; height:"+height+";fill:#abc");	
+			
+		/***************開始畫圖****************/	
+		var x = d3.scale.linear()
+			.range([0, width]);
+
+		var y = d3.scale.linear()
+			.range([height, 0]);
+
+		var color = d3.scale.category10();	
+			
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			//.tickSize(0)  //座標標示刻度的長度
+			.orient("bottom")
+			.tickFormat(function(d) { d+=""; return d.slice(0, d.indexOf(".")+2) + "%"; });
+
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("right")
+			.tickFormat(function(d){d+=""; return d.slice(0, d.indexOf(".")+2) + "%";});
+			
+		d3.tsv("data.tsv", function(error, data) {
+		  if (error) throw error;
+
+		  /*data.forEach(function(d) {
+			d.y = +d.y;
+			d.x = +d.x;
+		  });*/
+
+		  x.domain(d3.extent(data, function(d) { return d.x; })).nice();
+		  y.domain(d3.extent(data, function(d) { return d.y; })).nice();
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis)
+			/*.append("text")
+			  .attr("class", "label")
+			  .attr("x", width)
+			  .attr("y", -6)
+			  .style("text-anchor", "end")
+			  .text("Sepal Width (cm)");*/
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .attr("transform", "translate("+ width + ", 0)")
+			  .call(yAxis)
+			/*.append("text")
+			  .attr("class", "label")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -6)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Sepal Length (cm)");*/
+/********************* 背景虛線 格線 ******************************/				  
+		svg.append('g')
+		 .call(xAxis.tickFormat("")
+		  .tickSize(-height,0))
+		 .attr({
+		  'fill':'none',
+		  'stroke':'rgba(0,0,0,.1)',
+		  'transform':'translate(0,'+height+')' 
+		 });
+
+		svg.append('g')
+		 .call(
+			yAxis.tickFormat("")
+			.orient("left")
+			.tickSize(-width,0)
+		  )
+		 .attr({
+		  'fill':'none',
+		  'stroke':'rgba(0,0,0,.1)',
+		 });
+		 
+/******************* heightLine 選取點 的XY axis	****************************/	
+		//X background	 會有順序問題
+		var value_lineX_background=svg.append("rect")
+			.attr({
+				"height":15,
+				"fill":"white"
+			});
+			
+		//X axis	
+		var value_lineX=svg.append("g");		  
+		  value_lineX
+			.attr({
+			  "class":"x",
+			  "style":"visibility:hidden",
+			  "fill":"none",
+			  "stroke":"#0ccf15"
+			})
+			.call(xAxis.tickSize(0).tickFormat("")).selectAll(".tick").remove();
+		value_lineX.append("text");
 		
+		//Y background	 會有順序問題
+		var value_lineY_background=svg.append("rect")
+			.attr({
+				"height":15,
+				"fill":"white"
+			});
+		
+		//Y axis		
+		var value_lineY=svg.append("g");		  
+		  value_lineY
+			.attr({
+			  "class":"y",
+			  "style":"visibility:hidden",
+			  "fill":"none",
+			  "stroke":"#0ccf15"
+			})
+			.call(yAxis.tickSize(0).tickFormat("")).selectAll(".tick").remove();
+		value_lineY.append("text");
+		
+
+			
+/*********************  把其他創建的基礎元素開始畫上去 ****************************/			
+		//畫點
+		  svg.selectAll(".dot")
+			  .data(data)
+			.enter().append("circle")
+			  .attr("class", "dot")
+			  .attr("r", Math.max(height, width)/150)
+			  .attr("cx", function(d) { return x(d.x); })
+			  .attr("cy", function(d) { return y(d.y); })
+			  .style("fill", function(d) { return color(d.class); })
+			  .attr("x_value", function(d) { return d.x; })
+			  .attr("y_value", function(d) { return d.y; })
+			  .on("mouseover", function()
+			  {
+				//取得X位置
+				value_lineX
+					.attr("transform", "translate(0," + d3.select(this).attr("cy")+ ")")
+					.attr("style", "visibility:visible;")
+					.select("text").text(d3.select(this).attr("y_value"))
+						.attr("transform", "translate("+ (width-20) +",0)" );
+				//加入背景
+				value_lineX_background.attr("transform", "translate("+ (width-40) +", " + (d3.select(this).attr("cy")-15)+ ")" )
+					.attr("style", "visibility:visible;width:" + d3.select(this).attr("y_value").length*15);
+					
+				value_lineY
+					.attr("transform", "translate(" + d3.select(this).attr("cx")+ ", 0)")
+					.attr("style", "visibility:visible;")
+					.select("text").text(d3.select(this).attr("x_value"))
+						.attr("transform", "translate(-20, "+height+")" );
+				value_lineY_background.attr("transform", "translate("+(d3.select(this).attr("cx")-40)+", "+(height-15)+")" )
+					.attr("style", "visibility:visible; width:" + d3.select(this).attr("x_value").length*15);
+			  })
+			  .on("mouseout", function()
+			  {
+				value_lineX.attr("style", "visibility:hidden;");
+				value_lineX_background.attr("style", "visibility:hidden;");
+				value_lineY.attr("style", "visibility:hidden;");
+				value_lineY_background.attr("style", "visibility:hidden;");
+			  });
+
+		  var legend = svg.selectAll(".legend")
+			  .data(color.domain())
+			.enter().append("g")
+			  .attr("class", "legend")
+			  .attr("transform", function(d, i) { return "translate(-"+ (width)+"," + i * 20 + ")"; });
+
+		  legend.append("rect")
+			  .attr("x", width - 54)
+			  .attr("width", 18)
+			  .attr("height", 18)
+			  .style("fill", color);
+
+		  legend.append("text")
+			  .attr("x", width - 24)
+			  .attr("y", 9)
+			  .attr("dy", ".35em")
+			  .style("text-anchor", "begin")
+			  .text(function(d) { return d; });
+			  
+		  svg.append("text").text("三年年化標準差").attr("transform", "translate("+width/15*7+","+height/14*15+")");
+		  svg.append("text").text("三年平均月報酬率").attr("transform", "translate(-15, "+height/2+") rotate(-90)");
+		});	
 	</script>
 </body>
 
