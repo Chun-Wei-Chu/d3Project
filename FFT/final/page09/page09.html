@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Page 09</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="page09.js" charset="utf-8"></script>
+	
+</head>
+
+<body>
+	<h1 style="text-align:center; color:#ff9933; font-size: 300%;">再平衡</h1>
+	<table style="width:80%; margin:0 auto;line-height: 200%;font-size:16px">
+		<tr>
+			<td id="layer1"><td>
+		</tr>
+		<tr>
+			<td id="layer2">
+				<table style="width:100%">
+					<tr>
+						<td>
+							<table style="width:60%;">
+								<tr>
+									<td rowspan="2">選擇條件</td>
+									<td>
+										<input type="radio" name="page09_condition" />
+										定期再平衡
+									</td>
+									<td>
+										<select class="selectpicker">
+										  <option>Mustard</option>
+										  <option>Ketchup</option>
+										  <option>Relish</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="radio" name="page09_condition"/>
+										偏離達門檻再平衡
+									</td>
+									<td>
+										<select class="selectpicker">
+										  <option>Mustard</option>
+										  <option>Ketchup</option>
+										  <option>Relish</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table style="width:60%;">
+								<tr>
+									<td rowspan="2">選擇策略</td>
+									<td><input type="radio" name="page09_strategy"/>賣高買低策略</td>
+								</tr>
+								<tr>
+									<td><input type="radio" name="page09_strategy"/>逢低加碼策略</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			<td>
+			<td>
+		</tr>
+		<tr>
+			<td id="layer3" style="float:right"><button type="button" class="btn btn-success">計算條金額</button><td>
+		</tr>
+	</table>
+	
+	<script>
+		var data={
+			adjustDate_last:"2009/07/26",
+			title:["類別", "產品名稱", "現值(台幣)", "累積報酬率", "比重", "規劃比重", "差異"],
+			data:[
+				{
+					total:
+					{
+						type:"股票類",
+						product:"",
+						price:2300150,
+						remuneration:7.80,
+						proportion:60.21,
+						plan:55.00,
+						diff:5.21
+					},
+					each:[
+						{type:"", product:"貝萊德世礦A2(美元)", price:1210200, remuneration:8.10},
+						{type:"", product:"寶來台灣卓越50", price:1089950, remuneration:7.47}
+					]
+				},
+				{
+					total:
+					{
+						type:"債券類",
+						product:"",
+						price:800000,
+						remuneration:2.12,
+						proportion:20.94,
+						plan:20.00,
+						diff:0.94
+					},
+					each:[
+						{type:"", product:"聯博全球債券基金", price:800000, remuneration:2.12}
+					]
+				},
+				{
+					total:
+					{
+						type:"商品類",
+						product:"",
+						price:120000,
+						remuneration:-12.32,
+						proportion:3.14,
+						plan:10.00,
+						diff:-6.86
+					},
+					each:[
+						{type:"", product:"美林商品基金", price:120000, remuneration:-12.32}
+					]
+				},
+				{
+					total:
+					{
+						type:"現金類",
+						product:"",
+						price:600000,
+						remuneration:0.32,
+						proportion:15.71,
+						plan:15.00,
+						diff:0.71
+					},
+					each:[
+						{type:"", product:"類貨幣基金", price:600000, remuneration:0.32}
+					]
+				}
+			]
+		};
+	
+	</script>
+	<script>
+		var tmp = new createPage_09();
+		tmp.draw("#layer1", data);
+		
+		
+	</script>
+ 
+</body>
+
+</html>

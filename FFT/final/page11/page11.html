@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Page 11</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  
+  <script src="page11.js"></script>
+  
+</head>
+
+<style>
+
+	body 
+	{
+	  font: 10px sans-serif;
+	}
+	
+	.axis path,
+	.axis line 
+	{
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	
+	.page11_bar1 
+	{
+	  fill: #F93;
+	}
+	
+	.page11_bar2 
+	{
+	  fill: #3C3;
+	}
+	
+	.page11_bar3 
+	{
+	  fill: #099;
+	}
+	
+
+	.page11_line1 
+	{
+	  fill: none;
+	  stroke: #F93;
+	  stroke-width: 3px;
+	}
+	
+	.page11_line2
+	{
+	  fill: none;
+	  stroke: #3C3;
+	  stroke-width: 3px;
+	}
+	
+	.page11_line3 
+	{
+	  fill: none;
+	  stroke: #099;
+	  stroke-width: 3px;
+	}
+
+
+</style>
+<body style="width:100%">
+<h1 style="text-align:center; color:#ff9933; font-size: 400%;">新舊比較之回測績效</h1>
+<table style="margin:0 auto;">
+	<tr height="10px"></tr>
+	<tr>
+		<td  colspan=2>
+			<button type="button" class="btn btn-default" aria-label="Left Align" style="position:relative;left:5%">
+				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default" aria-label="Left Align" style="position:relative;left:5%">
+				<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+			</button>
+			
+			<button type="button" class="btn btn-default" style="position:relative;left:10%">1 M</button>
+			<button type="button" class="btn btn-default" style="position:relative;left:10%">3 M</button>
+			<button type="button" class="btn btn-default" style="position:relative;left:10%">1 Y</button>
+			<button type="button" class="btn btn-default" style="position:relative;left:10%">2 Y</button>
+			<button type="button" class="btn btn-default" style="position:relative;left:10%">3 Y</button>
+			
+			<h5 style="white-space:pre; display:inline; position:relative; left:20%;">基準指數 :  </h5>
+			<select class="selectpicker" style="position:relative; left:20%;width:10%; height:100%">
+			  <option>Mustard</option>
+			  <option>Ketchup</option>
+			  <option>Relish</option>
+			</select>
+		</td>
+	</tr>
+	<tr height="10px"></tr>
+	<tr><td rowspan="2" id="lineChart"></td><td id="BarUp"></td></tr>
+	<tr><td id="BarDown"></td></tr>
+</table>
+
+<script>
+	var LineData=[
+		{x:0, y:[1, 1, 10]},
+		{x:1, y:[2, 10, 60]},
+		{x:2, y:[4, 40, 100]},
+		{x:3, y:[8, 80, 140]},
+		{x:4, y:[16, 120, 200]},
+		{x:5, y:[32, 160, 280]},
+		{x:6, y:[64, 200, 330]},
+		{x:7, y:[128, 240, 370]},
+		{x:8, y:[256, 400, 450]},
+		{x:9, y:[512, 450, 520]},
+		{x:10, y:[1024, 800, 600]},
+		{x:11, y:[2048, 1200, 710]},
+		{x:12, y:[4096, 2200, 840]}
+	];
+	
+	var BarUpData={
+		text:"績效比較",
+		data:[
+			{text:"新組合", value:10},
+			{text:"原組合", value:9},
+			{text:"指數", value:6}
+		]
+	};
+
+	var BarDownData={
+		text:"波動比較",
+		data:[
+			{text:"新組合", value:10},
+			{text:"原組合", value:9},
+			{text:"指數", value:6}
+		]
+	};
+</script>
+
+<script>
+	//createPage11(target, data, width, height)
+	var tmp = new createPage11();
+	tmp.drawLine("#lineChart", LineData, 700, 500);
+	tmp.drawBar("#BarUp", BarUpData, 300, 250);
+	tmp.drawBar("#BarDown", BarDownData, 300, 250);
+
+
+</script>
+</body>
+</html>
