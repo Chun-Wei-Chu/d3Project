@@ -1,0 +1,225 @@
+﻿
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Page 07</title>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="page07.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  
+  <style>
+	body {
+	  font: 10px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  shape-rendering: crispEdges;
+	}
+
+	.brush_axis .brush_halo {
+	  fill: none;
+	  stroke: #abc;
+	  stroke-width: 8px;
+	  stroke-linecap: round;
+	}
+
+	
+	#page08TableUp  td, #page08TableDown  td
+	{
+		text-align:center;
+		border: 2px solid #edd;
+	}
+	
+	/* 圓形的外框顏色 */
+	/*.dot {
+	  stroke: #000;
+	}*/
+
+	/*.axis .domain {
+	  fill: none;
+	  stroke: #000;
+	  stroke-opacity: .3;
+	  stroke-width: 10px;
+	  stroke-linecap: round;
+	}*/
+	
+
+	</style>
+</head>
+
+<body>
+<!--button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+</button-->
+	<h1 style="text-align:center; color:#ff9933; font-size: 400%;">再配置之汰弱留強</h1>
+	<table style="posistion:relative; margin:0 auto;width:80%;">
+		<tr>
+			<td colspan=2 >
+				<button type="button" class="btn btn-default" style="position:relative;">股票</button>
+				<h5 style="white-space:pre; display:inline; position:relative; "><strong> 50% : 50% </strong></h5>
+				<button type="button" class="btn btn-default" style="position:relative;">債券</button>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan=2>
+				<table style="width:80%;"><tr>
+					<td><h4  style="white-space:pre;position:relative;"><strong>篩選基金 (18檔 ) : </strong><h4></td>
+					
+					<td><h5 style="white-space:pre;  position:relative; left:10%;">投資標的 :  </h5></td>
+					
+					<td><select class="selectpicker" style=" position:relative; right:20%;">
+					  <option>股票型</option>
+					  <option>Ketchup</option>
+					  <option>Relish</option>
+					</select></td>
+					
+					<td><h5 style="white-space:pre;  position:relative; left:10%;">投資標的 :  </h5></td>
+					
+					<td><select class="selectpicker" style=" position:relative; right:20%;">
+					  <option>股票型</option>
+					  <option>Ketchup</option>
+					  <option>Relish</option>
+					</select></td>
+				</tr></table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td id="page08TableUp" style="width:40%">
+				<h4>選擇增持基金(2檔) :</h4>
+			</td>
+			<td rowspan=2 style="width:60%">
+				<div id="page08Chart"></div>	
+			</td>
+		</tr>
+		
+		<tr>
+			<td id="page08TableDown">
+				<h4>選擇減持基金(2檔) :</h4>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan=2>
+				<div style="position:relative; padding-left:85%;padding-top:2%;">
+					<button type="button" class="btn btn-default" style="background-color:#9ab" onclick="onclick();">最佳化模擬</button>
+				</div>
+			</td>
+		</tr>
+	</table>
+
+	<script>
+		var dataTable=
+		[
+			{
+				Name:"A",
+				Return:
+				{
+					ThreeM:-0.23,
+					SixM:9.40,
+					OneY:40.32,
+					ThreeY:3.73
+				},
+				Risk:
+				{
+					SD:17.00,
+					Beta:0.58
+				}
+				
+			},
+			{
+				Name:"B",
+				Return:
+				{
+					ThreeM:-0.23,
+					SixM:9.40,
+					OneY:40.32,
+					ThreeY:4.56
+				},
+				Risk:
+				{
+					SD:35.00,
+					Beta:0.58
+				}
+				
+			},
+			{
+				Name:"C",
+				Return:
+				{
+					ThreeM:-0.23,
+					SixM:9.40,
+					OneY:40.32,
+					ThreeY:-4.56
+				},
+				Risk:
+				{
+					SD:17.00,
+					Beta:0.58
+				}
+				
+			}
+		];
+	
+		var dataChart=
+		[
+			{"y":"5.1","x":"3.5","class":"setosa"},
+			{"y":"4.9","x":"3.0","class":"setosa"},
+			{"y":"4.7","x":"3.2","class":"setosa"},
+			{"y":"4.6","x":"3.1","class":"setosa"},
+			{"y":"5.0","x":"3.6","class":"setosa"},
+			{"y":"4.9","x":"2.4","class":"versicolor"},
+			{"y":"5.7","x":"2.9","class":"versicolor"},
+			{"y":"6.2","x":"2.9","class":"versicolor"},
+			{"y":"5.1","x":"2.5","class":"versicolor"},
+			{"y":"5.7","x":"2.8","class":"versicolor"},
+			{"y":"6.3","x":"3.3","class":"virginica"},
+			{"y":"6.3","x":"2.5","class":"virginica"},
+			{"y":"6.5","x":"3.0","class":"virginica"},
+			{"y":"6.2","x":"3.4","class":"virginica"},
+			{"y":"5.9","x":"3.0","class":"virginica"}
+		];
+	</script>
+ 
+	<script>
+		
+		drawChart();
+		
+		//window.onresize = drawChart;
+		
+		function drawChart(){
+			document.getElementById("page08Chart").innerHTML="";
+			document.getElementById("page08TableUp").innerHTML="";
+			document.getElementById("page08TableDown").innerHTML="";
+			
+			//dataChart=dataTable.map(function(d){return {x:d.Return.ThreeY, y:d.Risk.SD, "class":"virginica"}});
+			var rightTd = new createPage_08();
+			rightTd.drawChart("#page08Chart", dataChart, $("body").width()*0.5, $("body").height()/3*2);
+			
+			/*作假資料用的for 迴圈*/
+			for(var i=0;i<30;i++)
+				dataTable.push(dataTable[0]);
+			
+			var up=new rightTd.drawTable("#page08TableUp", dataTable, $("body").width()*0.3, $("body").height()/3);
+			//console.log(up.checkBoxArray[5].attr("checked"));
+
+			var down=new rightTd.drawTable("#page08TableDown", dataTable, $("body").width()*0.3, $("body").height()/3);
+		}
+		
+		function onclick()
+		{
+			
+		}
+		/*var a=[1,2,3,4,5,6,7];
+		var b=[];
+		a.map(function(d){if(d!=1)b.push(d)});
+		console.log(b);*/
+	</script>
+</body>
+
+</html>
